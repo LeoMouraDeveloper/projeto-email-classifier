@@ -5,10 +5,11 @@ import { EmailClassificationResponse, ApiError } from '../types';
 
 // Configuração base da API
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_TIMEOUT = parseInt(process.env.REACT_APP_API_TIMEOUT || '60000', 10); // 60 segundos
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 30000, // 30 segundos
+  timeout: API_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -18,9 +19,18 @@ const apiClient = axios.create({
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
+    let message = error.response?.data?.detail || error.message || 'Erro desconhecido';
+    let detail = error.response?.data?.message || error.response?.statusText;
+    
+    // Tratamento específico para timeout
+    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+      message = 'O servidor está iniciando (cold start). Isso pode levar até 1 minuto no primeiro acesso.';
+      detail = 'Tente novamente em alguns segundos. O Render free tier hiberna quando não há uso.';
+    }
+    
     const apiError: ApiError = {
-      message: error.response?.data?.detail || error.message || 'Erro desconhecido',
-      detail: error.response?.data?.message || error.response?.statusText,
+      message,
+      detail,
     };
     return Promise.reject(apiError);
   }
