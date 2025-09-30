@@ -14,14 +14,14 @@ load_dotenv()
 app = FastAPI(title="Email Classifier API - Gemini Edition", version="3.0")
 
 # Configurar CORS para desenvolvimento e produção
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+# Adicionar padrões do Vercel se não especificado
+if "ALLOWED_ORIGINS" not in os.environ:
+    ALLOWED_ORIGINS.extend(["https://*.vercel.app", "https://vercel.app"])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # React local
-        "http://127.0.0.1:3000",  # React local alternativo
-        "https://*.vercel.app",   # Vercel production
-        "https://vercel.app",     # Vercel domains
-    ],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],

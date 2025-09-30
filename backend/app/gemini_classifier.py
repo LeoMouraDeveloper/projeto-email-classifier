@@ -26,19 +26,25 @@ class GeminiEmailClassifier:
     def _setup_gemini(self):
         """Configura API do Gemini"""
         api_key = os.getenv("GEMINI_API_KEY")
-        if api_key:
-            try:
-                genai.configure(api_key=api_key)
-                self.gemini_model = genai.GenerativeModel('gemini-2.5-flash')
-                print("✅ Gemini classificador configurado (modelo: gemini-2.5-flash)")
-                print("✅ NLP preprocessor ativado (nltk + regras)")
-            except Exception as e:
-                print(f"❌ Erro ao configurar Gemini: {e}")
-                self.gemini_model = None
-                raise Exception("Gemini API é obrigatório para este classificador. Configure GEMINI_API_KEY.")
-        else:
+        model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+        
+        if not api_key:
             print("❌ GEMINI_API_KEY não encontrada")
             raise Exception("Gemini API é obrigatório. Configure GEMINI_API_KEY no arquivo .env")
+            
+        if api_key == "sua_chave_do_gemini_aqui":
+            print("❌ GEMINI_API_KEY não foi configurada corretamente")
+            raise Exception("Configure sua chave real do Gemini no arquivo .env")
+        
+        try:
+            genai.configure(api_key=api_key)
+            self.gemini_model = genai.GenerativeModel(model_name)
+            print(f"✅ Gemini classificador configurado (modelo: {model_name})")
+            print("✅ NLP preprocessor ativado (nltk + regras)")
+        except Exception as e:
+            print(f"❌ Erro ao configurar Gemini: {e}")
+            self.gemini_model = None
+            raise Exception("Gemini API é obrigatório para este classificador. Verifique GEMINI_API_KEY.")
 
     def classify(self, text: str) -> Dict:
         """
