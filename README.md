@@ -93,28 +93,9 @@ npm start
 | `/health` | GET | Status da API e Gemini |
 | `/system_info` | GET | Informações detalhadas do sistema |
 
-## 🚀 Deploy
-
-### Backend (Render)
-1. Conecte repositório no Render
-2. Configure `GEMINI_API_KEY` nas variáveis de ambiente
-3. Deploy automático via GitHub
-
-### Frontend (Vercel)
-1. Conecte repositório no Vercel
-2. Configure `REACT_APP_API_URL` para URL do backend
-3. Deploy automático via GitHub
-
-## 🛡️ Segurança
-
-- **CORS**: Origens específicas configuradas
-- **Env Variables**: Chaves API protegidas
-- **Rate Limiting**: Proteção contra abuso
-- **Input Validation**: Sanitização de dados
-
 ## 📈 Performance
 
-- **Latência**: < 2s para análise completa
+- **Latência**: < 2s para análise completa, Obs: Na primeira tentativa pode demorar cerca de 1-2 minutos a requisição até startar a Api. 
 - **Precisão**: > 95% em casos de teste
 - **Throughput**: 50-80 requisições/segundo
 - **Uptime**: 99.5% (Render + Vercel)
@@ -149,10 +130,6 @@ npm start
 - Render (Backend)
 - Vercel (Frontend)
 - GitHub Actions
-
-## � Licença
-
-MIT License - Veja [LICENSE](./LICENSE) para detalhes.
 
 ---
 

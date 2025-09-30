@@ -41,26 +41,12 @@ npm start
 # http://localhost:3000
 ```
 
-**📋 Pré-requisito**: Backend rodando em `http://localhost:8000`
-
-## 🎨 Interface Visual
+**📋 Pré-requisito**: Backend rodando em `http://localhost:8000` para testar localmente ou acessar o link do repositório na Vercel https://projeto-email-classifier-8poe.vercel.app
 
 ### **Entrada de Dados**
 - 📝 **Tab Texto**: Área para colar email (10-5000 chars)
 - 📎 **Tab Arquivo**: Upload drag-and-drop (máx 10MB)
 - ✅ **Validação**: Feedback em tempo real
-
-### **Análise Comparativa**
-```
-┌─────────────────┬─────────────────┐
-│   🧠 NLP        │   🤖 Gemini     │
-├─────────────────┼─────────────────┤
-│ 🏆 Escolhido se │ 🏆 Escolhido se │
-│ ■■■■■■■ 85%     │ ■■■■■■■■ 92%    │
-│ "Palavras-chave │ "Solicitação    │
-│  produtivas"    │  específica"    │
-└─────────────────┴─────────────────┘
-```
 
 ### **Resultado Final**
 - 🎯 **Classificação**: Produtivo (verde) / Improdutivo (laranja)
@@ -105,7 +91,7 @@ npm start
 - Integração com API REST
 - Tratamento de erros
 - Tipagem completa
-- Timeout 60s (Render cold start)
+- Timeout 90s (Render cold start)
 ```
 
 ## 🎨 Design System
@@ -125,13 +111,6 @@ npm start
 --media: #ff9800        /* 70-89% */
 --baixa: #f44336        /* <70% */
 ```
-
-### **Componentes UI**
-- **Material Cards**: Elevation e sombras
-- **Progress Bars**: Indicadores de confiança
-- **Chips**: Tags de classificação
-- **Badges**: Método escolhido
-- **Tabs**: Alternância input
 
 ## 🧪 Como Testar
 
@@ -157,22 +136,6 @@ npm start
 - ⚡ Loading: Spinner durante análise
 - 🚨 Erro: Mensagens claras de falha
 
-## 🚀 Deploy
-
-### **Local**
-```bash
-npm install
-npm start          # http://localhost:3000
-npm run build      # Build produção
-```
-
-### **Vercel (Produção)**
-1. Conecte repositório no [Vercel](https://vercel.com)
-2. Configure `REACT_APP_API_URL` se necessário
-3. Deploy automático via `vercel.json`
-
-**🌐 Produção**: https://projeto-email-classifier-8poe.vercel.app
-
 ## 📊 Performance
 
 ### **Otimizações**
@@ -180,30 +143,6 @@ npm run build      # Build produção
 - ✅ **Tree Shaking**: Remoção de código morto
 - ✅ **React.memo**: Memoização de componentes
 - ✅ **Lazy Loading**: Carregamento sob demanda
-
-### **Métricas**
-- **Bundle Size**: < 500KB gzipped
-- **FCP**: < 1.5s
-- **LCP**: < 2.5s
-- **TTI**: < 3s
-
-## 🔧 Configuração
-
-### **Variáveis Ambiente**
-```bash
-# .env.local (opcional)
-REACT_APP_API_URL=http://localhost:8000
-REACT_APP_MAX_FILE_SIZE=10485760
-REACT_APP_TIMEOUT=60000
-```
-
-### **Scripts NPM**
-```bash
-npm start          # Desenvolvimento
-npm run build      # Build produção  
-npm test           # Testes unitários
-npm run eject      # Ejetar CRA (cuidado!)
-```
 
 ## 📈 Monitoramento
 
@@ -218,26 +157,6 @@ npm run eject      # Ejetar CRA (cuidado!)
 - Timeouts da API
 - Erros de validação
 - Problemas de upload
-
-## 🧪 Testes
-
-```bash
-# Testes unitários
-npm test
-
-# Testes com cobertura
-npm test -- --coverage
-
-# Type checking
-npx tsc --noEmit
-```
-
-### **Cobertura Target**
-- Componentes: >80%
-- Services: >90%
-- Utils: >95%
-
----
 
 ## 📞 Suporte
 

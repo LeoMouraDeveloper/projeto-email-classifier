@@ -5,7 +5,7 @@ import { EmailClassificationResponse, ApiError } from '../types';
 
 // Configuração base da API
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
-const API_TIMEOUT = parseInt(process.env.REACT_APP_API_TIMEOUT || '60000', 10); // 60 segundos
+const API_TIMEOUT = parseInt(process.env.REACT_APP_API_TIMEOUT || '90000', 10); // 90 segundos
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
