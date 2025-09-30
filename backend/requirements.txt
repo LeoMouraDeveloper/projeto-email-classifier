@@ -1,0 +1,22 @@
+# Email Classifier API - Hybrid Version (NLP + Gemini)
+# Dependências para sistema híbrido com pré-processamento NLP
+
+# API Web Framework
+fastapi
+uvicorn[standard]
+
+# Processamento de arquivos
+PyPDF2
+python-multipart
+
+# IA e APIs
+google-generativeai
+
+# NLP e Processamento de Texto
+nltk
+
+# Configuração
+python-dotenv
+
+# Requisições HTTP
+requests
