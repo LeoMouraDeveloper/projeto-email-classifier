@@ -1,0 +1,19 @@
+# Ignorar durante o build Docker
+.env
+.env.*
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+.git
+.gitignore
+README.md
+.pytest_cache
+.vscode
+.idea
+*.log
+.DS_Store
+node_modules/

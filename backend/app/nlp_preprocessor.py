@@ -1,19 +1,30 @@
 # app/nlp_preprocessor.py
 import re
-import nltk
-from typing import Dict, List
 import string
+from typing import Dict, List
 
-# Download necessário (executar uma vez)
+# Tentar importar NLTK, mas funcionar sem ele se necessário
 try:
-    nltk.data.find('tokenizers/punkt')
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('punkt')
-    nltk.download('stopwords')
-
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+    import nltk
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+    
+    # Download necessário (executar uma vez)
+    try:
+        nltk.data.find('tokenizers/punkt')
+        nltk.data.find('corpora/stopwords')
+        NLTK_AVAILABLE = True
+    except LookupError:
+        try:
+            nltk.download('punkt', quiet=True)
+            nltk.download('stopwords', quiet=True)
+            NLTK_AVAILABLE = True
+        except:
+            print("⚠️ NLTK não disponível, usando fallback simples")
+            NLTK_AVAILABLE = False
+except ImportError:
+    print("⚠️ NLTK não instalado, usando fallback simples")
+    NLTK_AVAILABLE = False
 
 class EmailNLPPreprocessor:
     """
@@ -22,8 +33,15 @@ class EmailNLPPreprocessor:
     """
     
     def __init__(self):
-        self.stop_words = set(stopwords.words('portuguese'))
-        self.stop_words.update(stopwords.words('english'))  # Para emails em inglês
+        # Configurar stop words com fallback
+        if NLTK_AVAILABLE:
+            try:
+                self.stop_words = set(stopwords.words('portuguese'))
+                self.stop_words.update(stopwords.words('english'))
+            except:
+                self.stop_words = self._get_fallback_stopwords()
+        else:
+            self.stop_words = self._get_fallback_stopwords()
         
         # Palavras-chave para classificação rápida
         self.productive_keywords = {
@@ -38,6 +56,18 @@ class EmailNLPPreprocessor:
             'ano novo', 'feriado', 'desculpa', 'agradecimento', 'elogio',
             'congratulações', 'felicitações', 'sucesso', 'conquista'
         }
+    
+    def _get_fallback_stopwords(self) -> set:
+        """Stopwords básicas em português e inglês"""
+        return {
+            'a', 'o', 'e', 'de', 'da', 'do', 'que', 'em', 'um', 'uma', 'para', 'com', 'não', 'se', 'na', 'por', 'mais', 'as', 'os', 'como', 'mas', 'foi', 'ao', 'ele', 'das', 'tem', 'à', 'seu', 'sua', 'ou', 'ser', 'quando', 'muito', 'há', 'nos', 'já', 'está', 'eu', 'também', 'só', 'pelo', 'pela', 'até', 'isso', 'ela', 'entre', 'era', 'depois', 'sem', 'mesmo', 'aos', 'ter', 'seus', 'suas', 'porque', 'assim', 'pode', 'foram', 'estar', 'sobre', 'então', 'outro', 'outro', 'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from'
+        }
+    
+    def _simple_tokenize(self, text: str) -> List[str]:
+        """Tokenização simples sem NLTK"""
+        # Remover pontuação e converter para minúsculas
+        text = re.sub(r'[^\w\s\u00C0-\u017F]', ' ', text.lower())
+        return text.split()
 
     def clean_text(self, text: str) -> str:
         """Limpa e normaliza o texto"""
@@ -58,7 +88,15 @@ class EmailNLPPreprocessor:
     def extract_features(self, text: str) -> Dict:
         """Extrai features do texto para análise complementar"""
         cleaned = self.clean_text(text)
-        tokens = word_tokenize(cleaned, language='portuguese')
+        
+        # Tokenização com ou sem NLTK
+        if NLTK_AVAILABLE:
+            try:
+                tokens = word_tokenize(cleaned, language='portuguese')
+            except:
+                tokens = self._simple_tokenize(cleaned)
+        else:
+            tokens = self._simple_tokenize(cleaned)
         
         # Remover stop words
         meaningful_words = [word for word in tokens if word not in self.stop_words and len(word) > 2]

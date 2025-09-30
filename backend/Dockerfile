@@ -15,11 +15,11 @@ COPY requirements.txt .
 # Instalar dependências Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Download de dados NLTK (necessário para NLP)
-RUN python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
-
 # Copiar código da aplicação
 COPY . .
+
+# Download de dados NLTK de forma mais robusta
+RUN python -c "import nltk; nltk.download('punkt', quiet=True); nltk.download('stopwords', quiet=True)" || echo "NLTK download failed, continuing..."
 
 # Expor porta
 EXPOSE 8000
