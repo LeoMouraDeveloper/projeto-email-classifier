@@ -1,7 +1,7 @@
 // Serviço para comunicação com a API de Classificação de Emails
 
 import axios from 'axios';
-import { EmailClassificationRequest, EmailClassificationResponse, ApiError } from '../types';
+import { EmailClassificationResponse, ApiError } from '../types';
 
 // Configuração base da API
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
