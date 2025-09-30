@@ -16,6 +16,6 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://email-classifier-api.onrender.com"
+    "REACT_APP_API_URL": "https://projeto-email-classifier.onrender.com"
   }
 }
