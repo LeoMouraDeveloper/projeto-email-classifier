@@ -144,7 +144,6 @@ npm start
 - React 18 + TypeScript
 - Material-UI
 - Axios
-- Vercel
 
 **Deploy:**
 - Render (Backend)
@@ -157,4 +156,4 @@ MIT License - Veja [LICENSE](./LICENSE) para detalhes.
 
 ---
 
-**📅 Versão**: 3.0 | **🚀 Status**: Produção | **👨‍� Autor**: LeoMouraDeveloper
+**📅 Versão**: 1.0 | **🚀 Status**: Produção | **👨‍ Autor**: LeoMouraDeveloper
