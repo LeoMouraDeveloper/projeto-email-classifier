@@ -133,4 +133,7 @@ npm start
 
 ---
 
+## Sugestão ##
+- Utilize os arquivos **Teste1.txt** e **Teste2.txt**  para classificar como produtivo ou improdutivo através do upload de arquivo.
+
 **📅 Versão**: 1.0 | **🚀 Status**: Produção | **👨‍ Autor**: LeoMouraDeveloper
